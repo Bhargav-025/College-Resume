@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Digital Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .bg-custom {
+            background-color: #1e1e3c;
+        }
+        .text-custom {
+            color: #64f5d1;
+        }
+        .btn-primary {
+            background-color: #64f5d1;
+            color: #1e1e3c;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #1e1e3c;
+            color: #64f5d1;
+        }
+        #portfolio-header {
+            background-color: rgba(30, 30, 60, 0.7);
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #portfolio-header-text {
+            text-align: left;
+            padding-left: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+        #portfolio-header-image {
+            width: 300px; /* Changed width */
+            height: 400px; /* Changed height */
+            border-radius: 0.375rem;
+            object-fit: cover;
+            margin-right: 2rem;
+            border: 3px solid #64f5d1; /* Changed border width */
+            background-image: url('C:\Users\Jitendra B Valte\Desktop\NSS\bhargav\website/photo.jpg'); /* Updated image path */
+            background-size: cover;
+            background-position: center;
+        }
+        .skill-progress {
+            background-color: #4a5568;
+            height: 0.5rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-progress-bar {
+            background-color: #64f5d1;
+            height: 100%;
+            border-radius: 0.5rem;
+            width: 0;
+            transition: width 0.8s ease;
+            position: relative;
+        }
+        .skill-progress-bar::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 1rem 1rem;
+            animation: move 1s linear infinite;
+        }
+        @keyframes move {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 1rem 0;
+            }
+        }
+        .skill-title {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        #certificate-modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        #certificate-modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            border-radius: 8px;
+            position: relative;
+        }
+        #certificate-modal-content iframe {
+            width: 100%;
+            height: 500px;
+        }
+        #certificate-modal-close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+        }
+        #certificate-modal-close:hover,
+        #certificate-modal-close:focus {
+            color: #000;
+            text-decoration: none;
+        }
+        .project-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .project-image:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-custom text-white">
+    <nav class="bg-gray-800 py-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-center gap-6">
+            <a href="#home" class="text-gray-300 hover:text-white transition duration-300">Home</a>
+            <a href="#projects" class="text-gray-300 hover:text-white transition duration-300">Projects</a>
+            <a href="#skills" class="text-gray-300 hover:text-white transition duration-300">Skills</a>
+            <a href="#about-me" class="text-gray-300 hover:text-white transition duration-300">About Me</a>
+            <a href="#contact-me" class="text-gray-300 hover:text-white transition duration-300">Contact Me</a>
+        </div>
+    </nav>
+
+    <header id="portfolio-header" class="container mx-auto text-center py-40 flex  flex-col md:flex-row items-center justify-between">
+        <div id="portfolio-header-text" class="text-center md:text-left ">
+            <p class="text-5xl text-custom">I'm Bhargav Valte</p>
+            <p class="text-2xl text-gray-300 mt-4">I am an experienced Software Engineer.</p>
+        </div>
+        <div id="portfolio-header-image" class="ml-8">
+            <img id="profile-image-input" src="C:\Users\Jitendra B Valte\Desktop\NSS\bhargav\website/photo.jpg" alt="Profile Image" style="border-radius: 0;">
+        </div>
+    </header>
+
+    <section id="projects" class="container mx-auto py-16 px-4">
+        <h2 class="text-3xl font-semibold text-gray-300 text-center mb-8">Projects</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                <h3 class="text-xl font-semibold text-white mb-2">Project 1: Digital Portfolio</h3>
+                <p class="text-gray-400 mb-4">Developed a personal digital portfolio website to showcase my skills, projects, and achievements.</p>
+                <img src="https://news.ontariotechu.ca/archives/2016/11/images/Thumbnail-Coding.jpg" alt="Digital Portfolio" class="project-image" onclick="showProject('https://news.ontariotechu.ca/archives/2016/11/images/Thumbnail-Coding.jpg')">
+            </div>
+            <div class="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                <h3 class="text-xl font-semibold text-white mb-2">Project 2: Tic Tac Toe Game</h3>
+                <p class="text-gray-400 mb-4">Created a Tic Tac Toe game with a user-friendly interface. </p>
+                <img src="https://i0.wp.com/images.squarespace-cdn.com/content/v1/54f74f23e4b0952b4e0011c0/1580269334204-W1N8ATYATHA6XP02YVSY/ke17ZwdGBToddI8pDm48kGtxPgPaOBG5VTwzK0O3JPx7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QHyNOqBUUEtDDsRWrJLTmYfwwyaF2qdqpAEW-vwkS-q9yrvcVcBFNcMZ7RZJD-G-L7L3_iLqMJNwF1D5UY19g/tictac.png?w=696&ssl=1" alt="Tic Tac Toe Game" class="project-image" onclick="showProject('https://i0.wp.com/images.squarespace-cdn.com/content/v1/54f74f23e4b0952b4e0011c0/1580269334204-W1N8ATYATHA6XP02YVSY/ke17ZwdGBToddI8pDm48kGtxPgPaOBG5VTwzK0O3JPx7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z5QHyNOqBUUEtDDsRWrJLTmYfwwyaF2qdqpAEW-vwkS-q9yrvcVcBFNcMZ7RZJD-G-L7L3_iLqMJNwF1D5UY19g/tictac.png?w=696&ssl=1')">
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="bg-gray-900 py-16 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-semibold text-gray-300 text-center mb-8">Skills</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-lg shadow-md p-6">
+                    <h4 class="text-lg font-semibold text-white mb-2">Programming Languages</h4>
+                    <div class="skill-title">JavaScript</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" data-skill="JavaScript" data-percent="75"></div>
+                    </div>
+                    <div class="skill-title">Python</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" data-skill="Python" data-percent="60"></div>
+                    </div>
+                    <div class="skill-title">C++</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" data-skill="C++" data-percent="80"></div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-lg shadow-md p-6">
+                    <h4 class="text-lg font-semibold text-white mb-2">Frameworks & Tools</h4>
+                    <div class="skill-title">React</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" data-skill="React" data-percent="90"></div>
+                    </div>
+                    <div class="skill-title">GitHub</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" data-skill="GitHub" data-percent="70"></div>
+                    </div>
+                    <div class="skill-title">Node.js</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" data-skill="Node.js" data-percent="95"></div>
+                    </div>
+                </div>
+                <div class="bg-gray-800 rounded-lg shadow-md p-6">
+                    <h4 class="text-lg font-semibold text-white mb-2">Databases</h4>
+                    <div class="skill-title">MySQL</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" data-skill="MySQL" data-percent="85"></div>
+                    </div>
+                    <div class="skill-title">MongoDB</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" data-skill="MongoDB" data-percent="65"></div>
+                    </div>
+                    <div class="skill-title">PostgreSQL</div>
+                    <div class="skill-progress">
+                        <div class="skill-progress-bar" data-skill="PostgreSQL" data-percent="75"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mx-auto py-16 px-4">
+        <h2 class="text-3xl font-semibold text-gray-300 text-center mb-8">Achievements & Certificates</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                <h3 class="text-xl font-semibold text-white mb-2">Certificate 1: Cisco - Python 1</h3>
+                <p class="text-gray-400 mb-4">Issued by Cisco, 2023</p>
+                <button onclick="showCertificate('python1.png')" class="btn-primary">
+                    <img src="C:\Users\Jitendra B Valte\Desktop\NSS\bhargav\website/python1.png" alt="Cisco Logo" style="height: 1em;">
+                    View Certificate
+                </button>
+            </div>
+            <div class="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                <h3 class="text-xl font-semibold text-white mb-2">Certificate 2: Hacker Rank</h3>
+                <p class="text-gray-400 mb-4">Issued by Hacker Rank, 2022</p>
+                <button onclick="showCertificate('hackerrank.png')" class="btn-primary">
+                    <img src="C:\Users\Jitendra B Valte\Desktop\NSS\bhargav\website/hackerrank.png" alt="Hacker Rank Logo" style="height: 1em;">
+                    View Certificate
+                </button>
+            </div>
+            <div class="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                <h3 class="text-xl font-semibold text-white mb-2">Achievement: AI workshop</h3>
+                <p class="text-gray-400 mb-4">Conducted by MITAOE</p>
+                <button onclick="showCertificate('CTAI.png')" class="btn-primary">
+                    <img src="C:\Users\Jitendra B Valte\Desktop\NSS\bhargav\website/CTAI.png" alt="MITAOE Logo" style="height: 1em;">
+                    View Certificate
+                </button>
+            </div>
+        </div>
+        <div id="certificate-modal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+                </div>
+                <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                    <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                <h2 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                    Certificate
+                                </h2>
+                                <div class="mt-2">
+                                    <iframe id="certificate-frame" src="" width="100%" height="500px" style="border:none;"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                        <button onclick="closeModal()" type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-gray-100 text-base font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="bg-gray-900 py-16 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-semibold text-gray-300 text-center mb-8">Education</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                <div class="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                    <h3 class="text-xl font-semibold text-white mb-2">BTech in Computer Engineering</h3>
+                    <p class="text-gray-400 mb-4">MITAOE, First Year</p>
+                </div>
+                <div class="bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                    <h3 class="text-xl font-semibold text-white mb-2">Higher Secondary Education</h3>
+                    <p class="text-gray-400 mb-4">Narayana E-Techno School(CBSE), 2022</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about-me" class="bg-gray-900 py-16 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-semibold text-gray-300 text-center mb-8">About Me</h2>
+            <div class="bg-gray-800 rounded-lg shadow-md p-6  ">
+                
+                <p class="text-gray-400 text-lg">
+                    Hi! I am Bhargav Valte, an ambitious and dedicated student with solid computer science fundamentals. I possess a track record of creating innovative and practical solutions to challenging problems. I possess skills in multiple programming languages, frameworks, and database management systems. I am interested in leveraging my skills and knowledge to contribute to a dynamic and challenging work environment.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact-me" class="bg-custom py-16 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-semibold text-gray-300 text-center mb-8">Contact Me</h2>
+            <div class="flex justify-center items-center gap-8">
+                <a href="https://www.linkedin.com/in/janedoe" target="_blank" rel="noopener noreferrer" class="text-custom hover:underline text-lg transition duration-300">
+                    LinkedIn
+                </a>
+                <p class="text-gray-400 text-lg">Email: bhargavjvalte@gmail.com</p>
+                <p class="text-gray-400 text-lg">Phone: +123 456 7890</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-gray-400 text-center py-4">
+        <p>© 2023 My Digital Portfolio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showCertificate(filename) {
+            var modal = document.getElementById("certificate-modal");
+            var frame = document.getElementById("certificate-frame");
+            frame.src = filename;
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("certificate-modal");
+            var frame = document.getElementById("certificate-frame");
+            frame.src = "";
+            modal.style.display = "none";
+        }
+
+        function showProject(imageUrl) {
+            var modal = document.getElementById("certificate-modal");
+            var frame = document.getElementById("certificate-frame");
+            frame.src = imageUrl;
+            modal.style.display = "block";
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const skillBars = document.querySelectorAll('.skill-progress-bar');
+        skillBars.forEach(bar => {
+            const skill = bar.dataset.skill;
+            const percent = bar.dataset.percent;
+            bar.style.width = percent + '%';
+            bar.innerHTML = `<span style="position: absolute; right: 0.5rem; top: 0.25rem; color: white; font-size: 0.75rem;">${percent}%</span>`;
+        });
+
+        // Get the image element
+        const profileImage = document.getElementById('profile-image-input');
+
+        // Replace the image source with the user's uploaded image
+        profileImage.src = 'photo.jpg'; // You can replace this with your actual image URL
+
+    </script>
+</body>
+</html>
